@@ -142,3 +142,9 @@ function downloadZipFile(dirArr = [
         })
     })
 }
+
+
+//取消富文本标签
+function getDomStringText(domString) {
+    return domString.replace(/<[\w\s:\/ # \\ = "' -;()]+>/g, '');
+}

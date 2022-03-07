@@ -148,3 +148,39 @@ function downloadZipFile(dirArr = [
 function getDomStringText(domString) {
     return domString.replace(/<[\w\s:\/ # \\ = "' -;()]+>/g, '');
 }
+
+//导出excel
+function Export2Excel() {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet([['1','2','3'],['4','5','6']]);
+    XLSX.utils.book_append_sheet(wb, ws, '测试导出')
+    XLSX.writeFile(wb, `test__${Date.now()}.xlsx`)
+ }
+
+ //随机数
+ function randomNum(start = 0, end = 0, close) {
+    if(close) {
+        end += 1;
+    }
+    return start + Math.floor(Math.random() * (end - start))
+}
+
+//监听输入内容
+let charm = function(fn, delay) {
+    let timer = null;
+    let self = this;
+    let code =  '';
+    return function(args) {
+         if(args.constructor.name === 'KeyboardEvent') {
+                code += args.key;
+         }
+        if(timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+        timer = setTimeout(function() {
+            fn.apply(self, [code]);
+            code = ''
+        }, delay)
+    }
+}
